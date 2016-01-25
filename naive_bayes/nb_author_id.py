@@ -38,9 +38,9 @@ classifier.fit(features_train, labels_train)
 print "training time:", round(time()-t0, 3), "s"
 
 t0 = time()
-predicates = classifier.predict(features_test)
+predictions = classifier.predict(features_test)
 print "prediction time:", round(time()-t0, 3), "s"
 
-print("Accuracy: {}".format(accuracy_score(labels_test, predicates)))
+print("Accuracy: {}".format(accuracy_score(labels_test, predictions)))
 
 #########################################################
