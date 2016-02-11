@@ -19,26 +19,37 @@ bumpy_slow = [features_train[ii][1] for ii in range(0, len(features_train)) if l
 #### initial visualization
 plt.xlim(0.0, 1.0)
 plt.ylim(0.0, 1.0)
-plt.scatter(bumpy_fast, grade_fast, color = "b", label="fast")
-plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
-plt.legend()
+# plt.scatter(bumpy_fast, grade_fast, color = "b", label="fast")
+# plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
+# plt.legend()
 plt.xlabel("bumpiness")
 plt.ylabel("grade")
-plt.show()
+
 ################################################################################
 
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import tree
+from sklearn.metrics import accuracy_score
 
-### your code here!  name your classifier object clf if you want the 
+treeClf = tree.DecisionTreeClassifier(min_samples_split=40)
+clf = AdaBoostClassifier(base_estimator=treeClf, n_estimators=50)
+#clf = RandomForestClassifier(n_estimators=10)
+#clf = KNeighborsClassifier(n_neighbors=11)
+
+clf.fit(features_train, labels_train)
+predictions = clf.predict(features_test)
+
+accuracy = accuracy_score(labels_test, predictions)
+
+print("Accuracy: {}".format(accuracy))
+
+### your code here!  name your classifier object clf if you want the
 ### visualization code (prettyPicture) to show you the decision boundary
-
-
-
-
-
-
-
 
 try:
     prettyPicture(clf, features_test, labels_test)
+    plt.show()
 except NameError:
     pass
