@@ -33,10 +33,10 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn import tree
 from sklearn.metrics import accuracy_score
 
-treeClf = tree.DecisionTreeClassifier(min_samples_split=40)
-clf = AdaBoostClassifier(base_estimator=treeClf, n_estimators=50)
+#treeClf = tree.DecisionTreeClassifier(min_samples_split=40)
+#clf = AdaBoostClassifier(base_estimator=treeClf, n_estimators=50)
 #clf = RandomForestClassifier(n_estimators=10)
-#clf = KNeighborsClassifier(n_neighbors=11)
+clf = KNeighborsClassifier(n_neighbors=11,weights='distance')
 
 clf.fit(features_train, labels_train)
 predictions = clf.predict(features_test)
