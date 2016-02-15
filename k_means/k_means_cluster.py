@@ -61,9 +61,39 @@ feature_2 = "exercised_stock_options"
 feature_3 = "total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
-data = featureFormat(data_dict, features_list )
-poi, finance_features = targetFeatureSplit( data )
+#data = featureFormat(data_dict, features_list )
+#poi, finance_features = targetFeatureSplit( data )
 
+from sklearn.preprocessing import MinMaxScaler
+
+salary = []
+ex_stok = []
+for users in data_dict:
+    val = data_dict[users]["salary"]
+    if val == 'NaN':
+        continue
+    salary.append(float(val))
+    val = data_dict[users]["exercised_stock_options"]
+    if val == 'NaN':
+        continue
+    ex_stok.append(float(val))
+
+salary = [min(salary), float(200000), max(salary)]
+ex_stok = [min(ex_stok), float(1000000), max(ex_stok)]
+
+print salary
+print ex_stok
+
+salary = numpy.array([[e] for e in salary])
+ex_stok = numpy.array([[e] for e in ex_stok])
+
+scaler_salary = MinMaxScaler()
+scaler_stok = MinMaxScaler()
+
+print scaler_salary.fit_transform(salary)
+print scaler_stok.fit_transform(ex_stok)
+
+quit()
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to
