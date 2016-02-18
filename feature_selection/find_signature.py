@@ -8,7 +8,7 @@ numpy.random.seed(42)
 ### The words (features) and authors (labels), already largely processed.
 ### These files should have been created from the previous (Lesson 10)
 ### mini-project.
-words_file = "../text_learning/your_word_data.pkl" 
+words_file = "../text_learning/your_word_data.pkl"
 authors_file = "../text_learning/your_email_authors.pkl"
 word_data = pickle.load( open(words_file, "r"))
 authors = pickle.load( open(authors_file, "r") )
@@ -39,5 +39,25 @@ labels_train   = labels_train[:150]
 
 ### your code goes here
 
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 
+print len(features_train)
 
+classifier = DecisionTreeClassifier()
+classifier.fit(features_train, labels_train)
+predictions = classifier.predict(features_test)
+accuracy = accuracy_score(labels_test, predictions)
+
+print("Accuracy: {}".format(accuracy))
+
+importances = classifier.feature_importances_
+importances = sorted(importances, reverse=True)
+print ["%0.2f" % i for i in importances[:10]]
+
+maxm = max(classifier.feature_importances_)
+index = numpy.nonzero(classifier.feature_importances_ == maxm)
+
+print maxm
+print index
+print vectorizer.get_feature_names()[index[0][0]]
